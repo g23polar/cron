@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+*.egg-info/
+
+# CDK
+cdk.out/
+
+# Lambda bundled dependencies
+jobs/*/*.dist-info/
+jobs/*/cffi/
+jobs/*/cryptography/
+jobs/*/jwt/
+jobs/*/pycparser/
+jobs/*/_cffi_backend*.so
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Secrets (never commit these)
+*.json.key
+*credentials*.json
