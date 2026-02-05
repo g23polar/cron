@@ -1,0 +1,48 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "b6b43c77fdd1e4e767b98b0166f3df801be36277288d9e790b8dbac5b03ee316": {
+      "displayName": "premier-league-matches-fn/Code",
+      "source": {
+        "path": "asset.b6b43c77fdd1e4e767b98b0166f3df801be36277288d9e790b8dbac5b03ee316",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region-e153fe3a": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "b6b43c77fdd1e4e767b98b0166f3df801be36277288d9e790b8dbac5b03ee316.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "a197f7f6bc5b8b28fecf482995623a4162f4437b36b3b641a2341e4ae21d8a17": {
+      "displayName": "calendar-sms-fn/Code",
+      "source": {
+        "path": "asset.a197f7f6bc5b8b28fecf482995623a4162f4437b36b3b641a2341e4ae21d8a17",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region-4cb642f9": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "a197f7f6bc5b8b28fecf482995623a4162f4437b36b3b641a2341e4ae21d8a17.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "6f49d0bb95274e6715ec4989d3115482bdce4399c51a21c7006dbd147e2af477": {
+      "displayName": "CronStack Template",
+      "source": {
+        "path": "CronStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region-96fee267": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "6f49d0bb95274e6715ec4989d3115482bdce4399c51a21c7006dbd147e2af477.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
