@@ -28,3 +28,4 @@ jobs/*/_cffi_backend*.so
 # Secrets (never commit these)
 *.json.key
 *credentials*.json
+skills/

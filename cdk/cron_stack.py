@@ -63,6 +63,28 @@ class CronStack(Stack):
             )
         )
 
+        # Weekly vegan recipes - 8am EST Sunday = 1pm UTC Sunday
+        recipes_job = self.create_scheduled_lambda(
+            name="weekly-vegan-recipes",
+            description="Fetches weekly vegan recipes and emails recommendations",
+            code_path=str(jobs_dir / "weekly_recipes"),
+            handler="handler.main",
+            schedule=events.Schedule.cron(hour="13", minute="0", week_day="SUN"),
+            timeout_minutes=2,
+            memory_mb=128,
+            environment={
+                "RECIPIENT_EMAIL": "",  # Set in console
+                "SENDER_EMAIL": "",  # Set in console, must be verified in SES
+            },
+        )
+        # Grant SES send permission
+        recipes_job.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["ses:SendEmail", "ses:SendRawEmail"],
+                resources=["*"],
+            )
+        )
+
     def create_scheduled_lambda(
         self,
         name: str,
