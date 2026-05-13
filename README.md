@@ -2,11 +2,12 @@
 
 Lightweight AWS CDK app that deploys scheduled (cron) Lambda jobs using EventBridge. Each job lives in `jobs/` and is packaged as a Lambda function with its own handler and optional dependencies.
 
-**What’s included**
-1. `premier_league` — Fetches today’s Premier League fixtures from API-Football and emails a summary via AWS SES.
-2. `calendar_sms` — Fetches today’s Google Calendar events and sends an SMS summary via AWS SNS.
+**What's included**
+1. `premier_league` — Fetches today's Premier League fixtures from API-Football and emails a summary via AWS SES.
+2. `calendar_sms` — Fetches today's Google Calendar events and sends an SMS summary via AWS SNS.
 3. `weekly_recipes` — Fetches weekly vegan recipes from Nora Cooks and emails 5 picks via AWS SES.
-4. `example_job` — Minimal template for new jobs.
+4. `broadway-lottery` — Enters 2 random Broadway Direct lotteries each Sunday and emails a confirmation via AWS SES.
+5. `example_job` — Minimal template for new jobs.
 
 **Architecture**
 1. AWS CDK (Python) defines Lambda functions and EventBridge rules.
@@ -36,18 +37,33 @@ cdk deploy
 Set environment variables in the Lambda console or via CDK environment overrides.
 
 `premier_league`
-1. `API_FOOTBALL_KEY` — RapidAPI key for API-Football
-2. `RECIPIENT_EMAIL` — Email to receive the summary
-3. `SENDER_EMAIL` — Verified SES sender email
+1. `API_FOOTBALL_KEY` - RapidAPI key for API-Football
+2. `RECIPIENT_EMAIL` - Email to receive the summary
+3. `SENDER_EMAIL` - Verified SES sender email
 
 `calendar_sms`
-1. `GOOGLE_CALENDAR_ID` — Calendar ID (e.g. `primary` or full ID)
-2. `GOOGLE_SERVICE_ACCOUNT_JSON_B64` — Base64-encoded service account JSON
-3. `SMS_PHONE_NUMBER` — E.164 format, e.g. `+15551234567`
+1. `GOOGLE_CALENDAR_ID` - Calendar ID (e.g. `primary` or full ID)
+2. `GOOGLE_SERVICE_ACCOUNT_JSON_B64` - Base64-encoded service account JSON
+3. `SMS_PHONE_NUMBER` - E.164 format, e.g. `+15551234567`
 
 `weekly_recipes`
 1. `RECIPIENT_EMAIL` — Email to receive the recommendations
 2. `SENDER_EMAIL` — Verified SES sender email
+
+`broadway-lottery`
+1. `BROADWAY_DIRECT_EMAIL` — Your Broadway Direct account email
+2. `BROADWAY_DIRECT_PASSWORD` — Your Broadway Direct account password
+3. `ENTRANT_FIRST_NAME` — First name for lottery entry form
+4. `ENTRANT_LAST_NAME` — Last name for lottery entry form
+5. `ENTRANT_DATE_OF_BIRTH` — Date of birth in MM/DD/YYYY format
+6. `ENTRANT_COUNTRY` — Country of residence (default: `USA`)
+7. `ENTRANT_ZIP` — ZIP code for lottery entry form
+8. `RECIPIENT_EMAIL` — Email to receive the entry confirmation
+9. `SENDER_EMAIL` — Verified SES sender email
+
+> **Before deploying:** Broadway Direct uses an undocumented API. Verify the endpoint constants
+> in `jobs/broadway-lottery/handler.py` (marked with `# VERIFY:` comments) by inspecting
+> network requests in browser DevTools while using the lottery site manually.
 
 **Calendar SMS dependencies**
 The Google auth helper depends on `PyJWT` and `cryptography`. Vendor these into the job directory before deploying:
@@ -59,6 +75,7 @@ pip install -r jobs/calendar_sms/requirements.txt -t jobs/calendar_sms
 1. Premier League matches: `08:00` UTC (3am EST)
 2. Calendar SMS: `13:00` UTC (8am EST)
 3. Weekly vegan recipes: `13:00` UTC Sunday (8am EST)
+4. Broadway lottery: `14:00` UTC Sunday (9am EST)
 
 **Add a new job**
 1. Copy `jobs/example_job` to a new folder.

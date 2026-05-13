@@ -85,6 +85,35 @@ class CronStack(Stack):
             )
         )
 
+        # Broadway Direct lottery - 9am EST Sunday = 2pm UTC Sunday
+        lottery_job = self.create_scheduled_lambda(
+            name="broadway-lottery",
+            description="Enters 2 random Broadway Direct lotteries each Sunday and emails confirmation",
+            code_path=str(jobs_dir / "broadway-lottery"),
+            handler="handler.main",
+            schedule=events.Schedule.cron(hour="14", minute="0", week_day="SUN"),
+            timeout_minutes=2,
+            memory_mb=128,
+            environment={
+                "BROADWAY_DIRECT_EMAIL": "",    # Set in console
+                "BROADWAY_DIRECT_PASSWORD": "", # Set in console
+                "ENTRANT_FIRST_NAME": "",       # Set in console
+                "ENTRANT_LAST_NAME": "",        # Set in console
+                "ENTRANT_DATE_OF_BIRTH": "",    # Set in console — MM/DD/YYYY
+                "ENTRANT_COUNTRY": "USA",       # Default: USA
+                "ENTRANT_ZIP": "",              # Set in console
+                "RECIPIENT_EMAIL": "",          # Set in console
+                "SENDER_EMAIL": "",             # Set in console, must be verified in SES
+            },
+        )
+        # Grant SES send permission
+        lottery_job.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["ses:SendEmail", "ses:SendRawEmail"],
+                resources=["*"],
+            )
+        )
+
     def create_scheduled_lambda(
         self,
         name: str,

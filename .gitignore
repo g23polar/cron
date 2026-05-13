@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.so
 .venv/
+.venv-skills/
 venv/
 *.egg-info/
 
@@ -24,6 +25,9 @@ jobs/*/_cffi_backend*.so
 
 # OS
 .DS_Store
+
+# Agent handoffs (local session state, not for version control)
+handoffs/
 
 # Secrets (never commit these)
 *.json.key
